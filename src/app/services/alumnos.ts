@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http'; // Clase para hacer llamadas HTTP
+import { Observable } from 'rxjs'; // Tipo para manejar respuestas asíncronas
 
-export interface Alumno{
+export interface Alumno {
   id?: number;
   nombre: string;
   edad: number;
@@ -14,31 +14,30 @@ export interface Alumno{
 @Injectable({
   providedIn: 'root'
 })
+export class AlumnosService {
 
-export class Alumnos {
+  private apiUrl = 'http://localhost:3000/alumnos';
 
-  private apiUrl: string = "http://192.168.1.21:3000/alumnos";
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAlumnos(): Observable<Alumno[]> {
     return this.http.get<Alumno[]>(this.apiUrl);
   }
 
-  getAlumno(id: number): Observable<Alumno>{
-    return this.http.get<Alumno>(`${this.apiUrl}/${id}`)
+  getAlumno(id: number): Observable<Alumno> {
+    return this.http.get<Alumno>(`${this.apiUrl}/${id}`);
   }
 
-  crearAlumno(alumno: Alumno): Observable<Alumno>{
+  crearAlumno(alumno: Alumno): Observable<Alumno> {
     return this.http.post<Alumno>(this.apiUrl, alumno);
   }
 
-  actualizarAlumno(id: number, alumno: Alumno): Observable<Alumno>{
+  actualizarAlumno(id: number, alumno: Alumno): Observable<Alumno> {
     return this.http.put<Alumno>(`${this.apiUrl}/${id}`, alumno);
   }
 
-  eliminarAlumno(id: number): Observable<void>{
+  eliminarAlumno(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-
+  
 }

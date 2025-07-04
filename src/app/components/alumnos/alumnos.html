@@ -1,0 +1,63 @@
+<div>
+    <h2>Lista de Alumnos</h2>
+    <button (click)="nuevoAlumno()">Nuevo Alumno</button>
+  
+    <table border="1" cellpadding="5" cellspacing="0">
+      <thead>
+        <tr>
+          <th>ID</th><th>Nombre</th><th>Edad</th><th>Sexo</th><th>CURP</th><th>Número Control</th><th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let alumno of alumnos">
+          <td>{{ alumno.id }}</td>
+          <td>{{ alumno.nombre }}</td>
+          <td>{{ alumno.edad }}</td>
+          <td>{{ alumno.sexo }}</td>
+          <td>{{ alumno.curp }}</td>
+          <td>{{ alumno.numero_control }}</td>
+          <td>
+            <button (click)="seleccionarAlumno(alumno)">Editar</button>
+            <button (click)="eliminarAlumno(alumno.id!)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="alumnoSeleccionado">
+      <h3>{{ modoEditar ? 'Editar Alumno' : 'Nuevo Alumno' }}</h3>
+      <form #form="ngForm" (ngSubmit)="guardar(form)">
+        <label>
+          Nombre:
+          <input type="text" name="nombre" [(ngModel)]="alumnoSeleccionado.nombre" required />
+        </label>
+        <br />
+        <label>
+          Edad:
+          <input type="number" name="edad" [(ngModel)]="alumnoSeleccionado.edad" required min="1" />
+        </label>
+        <br />
+        <label>
+          Sexo:
+          <select name="sexo" [(ngModel)]="alumnoSeleccionado.sexo" required>
+            <option value="0">Masculino</option>
+            <option value="1">Femenino</option>
+          </select>
+        </label>
+        <br />
+        <label>
+          CURP:
+          <input type="text" name="curp" [(ngModel)]="alumnoSeleccionado.curp" required maxlength="30" />
+        </label>
+        <br />
+        <label>
+          Número Control:
+          <input type="text" name="numero_control" [(ngModel)]="alumnoSeleccionado.numero_control" required maxlength="10" />
+        </label>
+        <br />
+        <button type="submit">{{ modoEditar ? 'Actualizar' : 'Crear' }}</button>
+        <button type="button" (click)="resetForm(form)">Cancelar</button>
+      </form>
+    </div>
+  </div>
+  
